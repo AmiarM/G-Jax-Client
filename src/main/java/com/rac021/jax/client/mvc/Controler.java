@@ -1,6 +1,7 @@
 
 package com.rac021.jax.client.mvc ;
 
+import java.awt.Font;
 import java.awt.Color ;
 import java.time.Instant ;
 import java.util.logging.Level ;
@@ -32,6 +33,7 @@ public class Controler       {
     }
     
     private void setListeners()                 {
+        
         button_Run_ActionPerformed()            ;
         button_Run_Custom_ActionPerformed()     ;
         button_ClearResult_ActionPerformed()    ;
@@ -39,7 +41,11 @@ public class Controler       {
         button_Dectypt_ActionPerformed()        ;
         button_Clear_Custom_ActionPerformed()   ;
         button_Script_CUSTOM()                  ;
-       
+        button_Zoom_CUSTOM()                    ;
+        button_Unzoom_CUSTOM()                  ;
+        button_Zoom_SSO()                       ;
+        button_Unzoom_SSO()                     ;
+
     }
     
     
@@ -54,6 +60,42 @@ public class Controler       {
         }) ;
     }
     
+    private void button_Zoom_CUSTOM() {
+        this.frame.getButton_Zoom_plus_customSign().addActionListener( e -> {
+            if( frame.getTextArea_Result_Custom().getFont().getSize() < 50 ) {
+                    frame.getTextArea_Result_Custom().setFont(new Font("DejaVu Sans", Font.PLAIN , 
+                    frame.getTextArea_Result_Custom().getFont().getSize() + 1 )) ;
+            }
+        }) ;
+    }
+ 
+    private void button_Unzoom_CUSTOM() {
+       this.frame.getButton_Zoom_minus_customSign().addActionListener( e ->  {
+            if( frame.getTextArea_Result_Custom().getFont().getSize() > 15 ) {
+                     frame.getTextArea_Result_Custom().setFont(new Font("DejaVu Sans", Font.PLAIN , 
+                     frame.getTextArea_Result_Custom().getFont().getSize() - 1 )) ;
+            }
+      }) ;
+    }
+    
+    private void button_Zoom_SSO() {
+        this.frame.getButton_Zoom_plus_sso().addActionListener( e ->  {
+            if( frame.getTextArea_Result().getFont().getSize() <  50 ) {
+                     frame.getTextArea_Result().setFont(new Font("DejaVu Sans", Font.PLAIN , 
+                     frame.getTextArea_Result().getFont().getSize() + 1 )) ;
+            }
+       }) ;
+    }
+ 
+    private void button_Unzoom_SSO() {
+        this.frame.getButton_Zoom_minus_sso().addActionListener( e -> {
+            if( frame.getTextArea_Result().getFont().getSize() > 15 ) {
+                    frame.getTextArea_Result().setFont(new Font("DejaVu Sans", Font.PLAIN , 
+                    frame.getTextArea_Result().getFont().getSize() - 1 )) ;
+            }
+        }) ;
+    }
+
     private synchronized void button_Run_ActionPerformed(ActionEvent e) throws Exception {
          
         frame.getXBusy().setBusy(true)                ;
@@ -195,7 +237,7 @@ public class Controler       {
         Runnable r = () -> {
            
           try {
-                String params          = frame.getTextField_Params_Custom().getText() ;
+                String params          = frame.getTextField_Params_Custom().getText()      ;
                 String urlService      = frame.getTextField_RUL_SERVICE_Custom().getText() ;
 
                 if(params != null && !params.isEmpty()) {

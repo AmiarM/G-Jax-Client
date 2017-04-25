@@ -427,7 +427,21 @@ public class MainFrame extends JFrame {
             this.panel35 = panel35;
         }
 
-        
+        public JButton getButton_Zoom_plus_customSign() {
+            return button_Zoom_plus_customSign;
+        }
+
+        public JButton getButton_Zoom_minus_customSign() {
+            return button_Zoom_minus_customSign;
+        }
+
+        public JButton getButton_Zoom_plus_sso() {
+            return button_Zoom_plus_sso;
+        }
+
+        public JButton getButton_Zoom_minus_sso() {
+            return button_Zoom_minus_sso;
+        }
         
         
 	//////////////////////////////////////////////////////////////////////////////////
@@ -523,6 +537,8 @@ public class MainFrame extends JFrame {
                 button_Script_CUSTOM = new JButton();
                 button_Decrypt_Custom = new JButton();
                 comboBox_Decrypt_Custom = new JComboBox<>();
+                button_Zoom_plus_customSign = new JButton();
+                button_Zoom_minus_customSign = new JButton();
                 PanelSSO = new JPanel();
                 PanelConfig2 = new JPanel();
                 label10 = new JLabel();
@@ -556,6 +572,8 @@ public class MainFrame extends JFrame {
                 textArea_Result = new JTextArea();
                 button_Clear = new JButton();
                 button_Script_SSO = new JButton();
+                button_Zoom_plus_sso = new JButton();
+                button_Zoom_minus_sso = new JButton();
                 PanelResult = new JPanel();
                 label1 = new JLabel();
 
@@ -845,7 +863,7 @@ public class MainFrame extends JFrame {
                         {
                             PanelSSO3.setLayout(new FormLayout(
                                 "7dlu, 2*($lcgap, default), $lcgap, default:grow, 3*($lcgap, default), $lcgap, right:default:grow, 6dlu, default, 10dlu",
-                                "4dlu, default, $lgap, default, 6dlu, default, 21dlu, default, $lgap, 25dlu, 2*($lgap, default), $lgap, fill:default:grow, 11dlu"));
+                                "4dlu, default, $lgap, default, 6dlu, default, 21dlu, default, $lgap, 25dlu, 3*($lgap, default), 15dlu:grow, 10dlu, 6dlu, 10dlu, fill:default, 11dlu"));
 
                             //======== PanelConfig4 ========
                             {
@@ -1068,7 +1086,7 @@ public class MainFrame extends JFrame {
                                 textArea_Result_Custom.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
                                 scrollPane5.setViewportView(textArea_Result_Custom);
                             }
-                            PanelSSO3.add(scrollPane5, CC.xywh(2, 6, 14, 11));
+                            PanelSSO3.add(scrollPane5, CC.xywh(2, 6, 14, 16));
 
                             //---- button_Clear_Custom ----
                             button_Clear_Custom.setText("Clear ");
@@ -1091,6 +1109,18 @@ public class MainFrame extends JFrame {
                                 "DES"
                             }));
                             PanelSSO3.add(comboBox_Decrypt_Custom, CC.xy(17, 14));
+
+                            //---- button_Zoom_plus_customSign ----
+                            button_Zoom_plus_customSign.setText("+");
+                            button_Zoom_plus_customSign.setFont(new Font("DejaVu Sans", Font.BOLD, 16));
+                            button_Zoom_plus_customSign.addActionListener(e -> button_Decrypt_Custom_ActionPerformed(e));
+                            PanelSSO3.add(button_Zoom_plus_customSign, CC.xy(17, 18, CC.DEFAULT, CC.CENTER));
+
+                            //---- button_Zoom_minus_customSign ----
+                            button_Zoom_minus_customSign.setText("-");
+                            button_Zoom_minus_customSign.setFont(new Font("DejaVu Sans", Font.BOLD, 16));
+                            button_Zoom_minus_customSign.addActionListener(e -> button_Decrypt_Custom_ActionPerformed(e));
+                            PanelSSO3.add(button_Zoom_minus_customSign, CC.xy(17, 20, CC.DEFAULT, CC.CENTER));
                         }
                         PanelConfig.add(PanelSSO3, CC.xywh(1, 1, 16, 1));
                     }
@@ -1100,7 +1130,7 @@ public class MainFrame extends JFrame {
                     {
                         PanelSSO.setLayout(new FormLayout(
                             "7dlu, 2*($lcgap, default), $lcgap, default:grow, 3*($lcgap, default), $lcgap, right:default:grow, 6dlu, default, $lcgap, 10dlu",
-                            "5dlu, 2*($lgap, default), 6dlu, default, $lgap, 15dlu, $lgap, default, $lgap, default:grow, $lgap, default, $lgap, fill:default:grow, 15dlu, default"));
+                            "5dlu, 2*($lgap, default), 6dlu, default, $lgap, 15dlu, $lgap, default, $lgap, default:grow, $lgap, 10dlu, 6dlu, 10dlu, 15dlu, default"));
 
                         //======== PanelConfig2 ========
                         {
@@ -1305,6 +1335,16 @@ public class MainFrame extends JFrame {
                         button_Script_SSO.setText("Script");
                         button_Script_SSO.addActionListener(e -> button_Script_SSOActionPerformed(e));
                         PanelSSO.add(button_Script_SSO, CC.xy(17, 11));
+
+                        //---- button_Zoom_plus_sso ----
+                        button_Zoom_plus_sso.setText("+");
+                        button_Zoom_plus_sso.setFont(new Font("DejaVu Sans", Font.BOLD, 16));
+                        PanelSSO.add(button_Zoom_plus_sso, CC.xy(17, 15));
+
+                        //---- button_Zoom_minus_sso ----
+                        button_Zoom_minus_sso.setText("-");
+                        button_Zoom_minus_sso.setFont(new Font("DejaVu Sans", Font.BOLD, 16));
+                        PanelSSO.add(button_Zoom_minus_sso, CC.xy(17, 17));
                     }
                     tabbedPanePrincipal.addTab("** KeyCloack-Jax-Client ( SSO ) **", PanelSSO);
 
@@ -1410,6 +1450,8 @@ public class MainFrame extends JFrame {
         private JButton button_Script_CUSTOM;
         private JButton button_Decrypt_Custom;
         private JComboBox<String> comboBox_Decrypt_Custom;
+        private JButton button_Zoom_plus_customSign;
+        private JButton button_Zoom_minus_customSign;
         protected JPanel PanelSSO;
         private JPanel PanelConfig2;
         private JLabel label10;
@@ -1443,6 +1485,8 @@ public class MainFrame extends JFrame {
         private JTextArea textArea_Result;
         private JButton button_Clear;
         private JButton button_Script_SSO;
+        private JButton button_Zoom_plus_sso;
+        private JButton button_Zoom_minus_sso;
         protected JPanel PanelResult;
         private JLabel label1;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables

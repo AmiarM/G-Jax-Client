@@ -1071,7 +1071,7 @@
              </void>
              <void method="setProperty">
               <string>$rowSpecs</string>
-              <string>4dlu, default, linegap, default, 6dlu, default, 21dlu, default, linegap, 25dlu, linegap, default, linegap, default, linegap, fill:default:grow, 11dlu</string>
+              <string>4dlu, default, linegap, default, 6dlu, default, 21dlu, default, linegap, 25dlu, linegap, default, linegap, default, linegap, default, 15dlu:grow, 10dlu, 6dlu, 10dlu, fill:default, 11dlu</string>
              </void>
             </object>
             <void method="auxiliary">
@@ -2129,7 +2129,7 @@
               </void>
               <void method="setProperty">
                <string>gridHeight</string>
-               <int>11</int>
+               <int>16</int>
               </void>
               <void method="setProperty">
                <string>gridWidth</string>
@@ -2263,6 +2263,88 @@
               </void>
              </object>
             </void>
+            <void method="add">
+             <object class="com.jformdesigner.model.FormComponent">
+              <string>javax.swing.JButton</string>
+              <void method="setProperty">
+               <string>text</string>
+               <string>+</string>
+              </void>
+              <void method="setProperty">
+               <string>font</string>
+               <object class="java.awt.Font" id="Font8">
+                <string>DejaVu Sans</string>
+                <int>1</int>
+                <int>16</int>
+               </object>
+              </void>
+              <void property="name">
+               <string>button_Zoom_plus_customSign</string>
+              </void>
+              <void method="addEvent">
+               <object class="com.jformdesigner.model.FormEvent">
+                <string>java.awt.event.ActionListener</string>
+                <string>actionPerformed</string>
+                <string>button_Decrypt_Custom_ActionPerformed</string>
+                <boolean>true</boolean>
+               </object>
+              </void>
+             </object>
+             <object class="com.jformdesigner.model.FormLayoutConstraints">
+              <class>com.jgoodies.forms.layout.CellConstraints</class>
+              <void method="setProperty">
+               <string>gridX</string>
+               <int>17</int>
+              </void>
+              <void method="setProperty">
+               <string>gridY</string>
+               <int>18</int>
+              </void>
+              <void method="setProperty">
+               <string>vAlign</string>
+               <object class="com.jgoodies.forms.layout.CellConstraints" field="CENTER"/>
+              </void>
+             </object>
+            </void>
+            <void method="add">
+             <object class="com.jformdesigner.model.FormComponent">
+              <string>javax.swing.JButton</string>
+              <void method="setProperty">
+               <string>text</string>
+               <string>-</string>
+              </void>
+              <void method="setProperty">
+               <string>font</string>
+               <object idref="Font8"/>
+              </void>
+              <void property="name">
+               <string>button_Zoom_minus_customSign</string>
+              </void>
+              <void method="addEvent">
+               <object class="com.jformdesigner.model.FormEvent">
+                <string>java.awt.event.ActionListener</string>
+                <string>actionPerformed</string>
+                <string>button_Decrypt_Custom_ActionPerformed</string>
+                <boolean>true</boolean>
+               </object>
+              </void>
+             </object>
+             <object class="com.jformdesigner.model.FormLayoutConstraints">
+              <class>com.jgoodies.forms.layout.CellConstraints</class>
+              <void method="setProperty">
+               <string>gridX</string>
+               <int>17</int>
+              </void>
+              <void method="setProperty">
+               <string>gridY</string>
+               <int>20</int>
+              </void>
+              <void method="setProperty">
+               <string>vAlign</string>
+               <object class="com.jgoodies.forms.layout.CellConstraints" field="CENTER"/>
+              </void>
+             </object>
+            </void>
            </object>
            <object class="com.jformdesigner.model.FormLayoutConstraints">
             <class>com.jgoodies.forms.layout.CellConstraints</class>
@@ -2292,7 +2374,7 @@
            </void>
            <void method="setProperty">
             <string>$rowSpecs</string>
-            <string>5dlu, linegap, default, linegap, default, 6dlu, default, linegap, 15dlu, linegap, default, linegap, default:grow, linegap, default, linegap, fill:default:grow, 15dlu, default</string>
+            <string>5dlu, linegap, default, linegap, default, 6dlu, default, linegap, 15dlu, linegap, default, linegap, default:grow, linegap, 10dlu, 6dlu, 10dlu, 15dlu, default</string>
            </void>
           </object>
           <void method="auxiliary">
@@ -3219,6 +3301,64 @@
             <void method="setProperty">
              <string>gridY</string>
              <int>11</int>
+            </void>
+           </object>
+          </void>
+          <void method="add">
+           <object class="com.jformdesigner.model.FormComponent">
+            <string>javax.swing.JButton</string>
+            <void method="setProperty">
+             <string>text</string>
+             <string>+</string>
+            </void>
+            <void method="setProperty">
+             <string>font</string>
+             <object class="java.awt.Font" id="Font9">
+              <string>DejaVu Sans</string>
+              <int>1</int>
+              <int>16</int>
+             </object>
+            </void>
+            <void property="name">
+             <string>button_Zoom_plus_sso</string>
+            </void>
+           </object>
+           <object class="com.jformdesigner.model.FormLayoutConstraints">
+            <class>com.jgoodies.forms.layout.CellConstraints</class>
+            <void method="setProperty">
+             <string>gridX</string>
+             <int>17</int>
+            </void>
+            <void method="setProperty">
+             <string>gridY</string>
+             <int>15</int>
+            </void>
+           </object>
+          </void>
+          <void method="add">
+           <object class="com.jformdesigner.model.FormComponent">
+            <string>javax.swing.JButton</string>
+            <void method="setProperty">
+             <string>text</string>
+             <string>-</string>
+            </void>
+            <void method="setProperty">
+             <string>font</string>
+             <object idref="Font9"/>
+            </void>
+            <void property="name">
+             <string>button_Zoom_minus_sso</string>
+            </void>
+           </object>
+           <object class="com.jformdesigner.model.FormLayoutConstraints">
+            <class>com.jgoodies.forms.layout.CellConstraints</class>
+            <void method="setProperty">
+             <string>gridX</string>
+             <int>17</int>
+            </void>
+            <void method="setProperty">
+             <string>gridY</string>
+             <int>17</int>
             </void>
            </object>
           </void>
