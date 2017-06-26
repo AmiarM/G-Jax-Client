@@ -22,7 +22,7 @@
 
 #### Custom Sign On Panel
 
-![custom-g-jax-client](https://user-images.githubusercontent.com/7684497/27563357-6570deea-5ad1-11e7-9396-c287592cd050.png
+![custom-g-jax-client](https://user-images.githubusercontent.com/7684497/27563357-6570deea-5ad1-11e7-9396-c287592cd050.png)
 
 -------------------------------------
 
