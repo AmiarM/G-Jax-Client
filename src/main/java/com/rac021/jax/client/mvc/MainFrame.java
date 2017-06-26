@@ -6,6 +6,7 @@ import java.beans.* ;
 import javax.swing.* ;
 import java.awt.event.* ;
 import javax.swing.border.* ;
+import javax.swing.event.*;
 import net.miginfocom.swing.* ;
 import com.jgoodies.forms.factories.* ;
 import org.jdesktop.swingx.JXTaskPane ;
@@ -96,10 +97,14 @@ public class MainFrame extends JFrame {
             this.checkBoxVerb = checkBoxVerb;
         }
 
+        public JComboBox<String> getComboBox_Cipher_Custom() {
+            return comboBox_Cipher_Custom;
+        }
+
         public JToggleButton getToggleButton() {
             return toggleButton;
         }
-
+        
         public void setToggleButton(JToggleButton toggleButton) {
             this.toggleButton = toggleButton;
         }
@@ -144,12 +149,12 @@ public class MainFrame extends JFrame {
             this.textField_RUL_SERVICE = textField_RUL_SERVICE;
         }
 
-        public JButton getButton_Run() {
-            return button_Run;
+        public JButton getButton_Run_SSO() {
+            return button_Run_SSO ;
         }
 
-        public void setButton_Run(JButton button_Run) {
-            this.button_Run = button_Run;
+        public void setButton_Run(JButton button_Run_SSO ) {
+            this.button_Run_SSO = button_Run_SSO ;
         }
 
         public JTextField getTextField_Username() {
@@ -200,12 +205,12 @@ public class MainFrame extends JFrame {
             this.textField_Params = textField_Params;
         }
 
-        public JTextArea getTextArea_Result() {
-            return textArea_Result;
+        public JTextArea getTextArea_Result_SSO() {
+            return textArea_Result_SSO ;
         }
 
-        public void setTextArea_Result(JTextArea textArea_Result) {
-            this.textArea_Result = textArea_Result;
+        public void setTextArea_Result_SSO(JTextArea textArea_Result) {
+            this.textArea_Result_SSO = textArea_Result;
         }
 
         public JButton getButton_Clear() {
@@ -228,12 +233,12 @@ public class MainFrame extends JFrame {
             this.textArea_Token = textArea_Token;
         }
 
-        public JTextField getTextField_Sort() {
-            return textField_Sort;
+        public JTextField getTextField_Keep_SSO() {
+            return textField_Keep_SSO ;
         }
 
-        public void setTextField_Sort(JTextField textField_Sort) {
-            this.textField_Sort = textField_Sort;
+        public void setTextField_Keep_SSO (JTextField textField_Sort) {
+            this.textField_Keep_SSO = textField_Sort;
         }
 
         public JCheckBox getCheckBox_Refresh_Token() {
@@ -315,12 +320,12 @@ public class MainFrame extends JFrame {
             this.textField_Params_Custom = textField_Params_Custom;
         }
 
-        public JTextField getTextField_Sort_Custom() {
-            return textField_Sort_Custom;
+        public JTextField getTextField_Keep_Custom() {
+            return textField_Keep_Custom;
         }
 
-        public void setTextField_Sort_Custom(JTextField textField_Sort_Custom) {
-            this.textField_Sort_Custom = textField_Sort_Custom;
+        public void setTextField_Keep_Custom(JTextField textField_Sort_Custom) {
+            this.textField_Keep_Custom = textField_Sort_Custom;
         }
 
         public JComboBox<String> getComboBox_HashedLogin() {
@@ -373,18 +378,6 @@ public class MainFrame extends JFrame {
 
         public JButton getButton_Decrypt_Custom() {
             return button_Decrypt_Custom;
-        }
-
-        public void setButton_Decrypt_Custom(JButton button_Decrypt_Custom) {
-            this.button_Decrypt_Custom = button_Decrypt_Custom;
-        }
-
-        public JComboBox<String> getComboBox_Decrypt_Custom() {
-            return comboBox_Decrypt_Custom;
-        }
-
-        public void setComboBox_Decrypt_Custom(JComboBox<String> comboBox_Decrypt_Custom) {
-            this.comboBox_Decrypt_Custom = comboBox_Decrypt_Custom;
         }
 
         public JButton getButton_Run_Custom() {
@@ -442,10 +435,26 @@ public class MainFrame extends JFrame {
         public JButton getButton_Zoom_minus_sso() {
             return button_Zoom_minus_sso;
         }
-        
+
+        public JXHyperlink getButton_Copy_ClipBoard_SSO() {
+            return button_Copy_ClipBoard_SSO;
+        }
+
         
 	//////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////
+
+    public JXHyperlink getButton_Copy_ClipBoard_Custom() {
+        return button_Copy_ClipBoard_Custom;
+    }
+
+    public void setButton_Copy_ClipBoard_Custom(JXHyperlink button_Copy_ClipBoard_Custom) {
+        this.button_Copy_ClipBoard_Custom = button_Copy_ClipBoard_Custom;
+    }
+
+    private void tabbedPanePrincipalStateChanged(ChangeEvent e) {
+       textArea_Token.setText("") ;
+    }
 
         
 
@@ -476,7 +485,7 @@ public class MainFrame extends JFrame {
                 separator4 = compFactory.createSeparator("");
                 HyperlinkPanelConfiguration = new JXHyperlink();
                 HyperlinkPanelSimulation = new JXHyperlink();
-                HyperlinkPanelResults = new JXHyperlink();
+                HyperlinkPanelResult = new JXHyperlink();
                 separator7 = compFactory.createSeparator("");
                 xTaskPane4 = new JXTaskPane();
                 separator9 = compFactory.createSeparator("");
@@ -523,7 +532,7 @@ public class MainFrame extends JFrame {
                 label39 = new JLabel();
                 panel11 = new JPanel();
                 label37 = new JLabel();
-                textField_Sort_Custom = new JTextField();
+                textField_Keep_Custom = new JTextField();
                 comboBox_HashedLogin = new JComboBox<>();
                 comboBox_HashedPassword = new JComboBox<>();
                 comboBox_HashedTimeStamp = new JComboBox<>();
@@ -531,12 +540,16 @@ public class MainFrame extends JFrame {
                 panel12 = new JPanel();
                 label40 = new JLabel();
                 comboBox_Accept_Custom = new JComboBox<>();
+                panel13 = new JPanel();
+                label44 = new JLabel();
+                comboBox_Cipher_Custom = new JComboBox<>();
+                button_Decrypt_Custom = new JXHyperlink();
+                label5 = new JLabel();
                 scrollPane5 = new JScrollPane();
                 textArea_Result_Custom = new JTextArea();
-                button_Clear_Custom = new JButton();
                 button_Script_CUSTOM = new JButton();
-                button_Decrypt_Custom = new JButton();
-                comboBox_Decrypt_Custom = new JComboBox<>();
+                button_Clear_Custom = new JButton();
+                button_Copy_ClipBoard_Custom = new JXHyperlink();
                 button_Zoom_plus_customSign = new JButton();
                 button_Zoom_minus_customSign = new JButton();
                 PanelSSO = new JPanel();
@@ -548,7 +561,7 @@ public class MainFrame extends JFrame {
                 textField_URL_KEYCLOAK = new JTextField();
                 label12 = new JLabel();
                 textField_RUL_SERVICE = new JTextField();
-                button_Run = new JButton();
+                button_Run_SSO = new JButton();
                 panel2 = new JPanel();
                 label16 = new JLabel();
                 textField_Params = new JTextField();
@@ -558,7 +571,7 @@ public class MainFrame extends JFrame {
                 textField_Client_id = new JTextField();
                 panel5 = new JPanel();
                 label17 = new JLabel();
-                textField_Sort = new JTextField();
+                textField_Keep_SSO = new JTextField();
                 label14 = new JLabel();
                 passwordField_Password = new JPasswordField();
                 label9 = new JLabel();
@@ -569,9 +582,10 @@ public class MainFrame extends JFrame {
                 panel4 = new JPanel();
                 checkBox_Refresh_Token = new JCheckBox();
                 scrollPane1 = new JScrollPane();
-                textArea_Result = new JTextArea();
-                button_Clear = new JButton();
+                textArea_Result_SSO = new JTextArea();
                 button_Script_SSO = new JButton();
+                button_Clear = new JButton();
+                button_Copy_ClipBoard_SSO = new JXHyperlink();
                 button_Zoom_plus_sso = new JButton();
                 button_Zoom_minus_sso = new JButton();
                 PanelResult = new JPanel();
@@ -665,23 +679,6 @@ public class MainFrame extends JFrame {
                 }
                 setJMenuBar(menuBar1);
 
-                //======== panel35 ========
-                {
-
-                    // JFormDesigner evaluation mark
-                    panel35.setBorder(new javax.swing.border.CompoundBorder(
-                        new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
-                            "JFormDesigner Evaluation", javax.swing.border.TitledBorder.CENTER,
-                            javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12),
-                            java.awt.Color.red), panel35.getBorder())); panel35.addPropertyChangeListener(new java.beans.PropertyChangeListener(){public void propertyChange(java.beans.PropertyChangeEvent e){if("border".equals(e.getPropertyName()))throw new RuntimeException();}});
-
-                    panel35.setLayout(new FormLayout(
-                        "[150dlu,default]",
-                        "default, $lgap, default"));
-                }
-                contentPane.add(panel35, CC.xy(3, 1));
-                contentPane.add(label33, CC.xywh(5, 1, 7, 1));
-
                 //======== scrollPane3 ========
                 {
 
@@ -696,7 +693,7 @@ public class MainFrame extends JFrame {
                             Container xTaskPane1ContentPane = xTaskPane1.getContentPane();
                             xTaskPane1ContentPane.setLayout(new FormLayout(
                                 "3*(default), $lcgap, default, $lcgap, default:grow",
-                                "12*(default, $lgap), default"));
+                                "13*(default, $lgap), default"));
                             xTaskPane1ContentPane.add(separator4, CC.xywh(1, 3, 7, 1));
 
                             //---- HyperlinkPanelConfiguration ----
@@ -704,22 +701,22 @@ public class MainFrame extends JFrame {
                             HyperlinkPanelConfiguration.setClickedColor(new Color(51, 51, 255));
                             HyperlinkPanelConfiguration.setFont(new Font("Tahoma", Font.BOLD, 12));
                             HyperlinkPanelConfiguration.addActionListener(e -> HyperlinkPanelConfigurationActionPerformed(e));
-                            xTaskPane1ContentPane.add(HyperlinkPanelConfiguration, CC.xywh(2, 7, 6, 1));
+                            xTaskPane1ContentPane.add(HyperlinkPanelConfiguration, CC.xy(2, 9));
 
                             //---- HyperlinkPanelSimulation ----
                             HyperlinkPanelSimulation.setText("Simulation");
                             HyperlinkPanelSimulation.setClickedColor(new Color(51, 51, 255));
                             HyperlinkPanelSimulation.setFont(new Font("Tahoma", Font.BOLD, 12));
                             HyperlinkPanelSimulation.addActionListener(e -> HyperlinkPanelSimulationActionPerformed(e));
-                            xTaskPane1ContentPane.add(HyperlinkPanelSimulation, CC.xywh(2, 13, 6, 1));
+                            xTaskPane1ContentPane.add(HyperlinkPanelSimulation, CC.xy(2, 15));
 
-                            //---- HyperlinkPanelResults ----
-                            HyperlinkPanelResults.setText("Results");
-                            HyperlinkPanelResults.setClickedColor(new Color(51, 51, 255));
-                            HyperlinkPanelResults.setFont(new Font("Tahoma", Font.BOLD, 12));
-                            HyperlinkPanelResults.addActionListener(e -> HyperlinkPanelResultatsActionPerformed(e));
-                            xTaskPane1ContentPane.add(HyperlinkPanelResults, CC.xywh(2, 19, 6, 1));
-                            xTaskPane1ContentPane.add(separator7, CC.xywh(1, 23, 7, 1));
+                            //---- HyperlinkPanelResult ----
+                            HyperlinkPanelResult.setText("Result");
+                            HyperlinkPanelResult.setClickedColor(new Color(51, 51, 255));
+                            HyperlinkPanelResult.setFont(new Font("Tahoma", Font.BOLD, 12));
+                            HyperlinkPanelResult.addActionListener(e -> HyperlinkPanelSimulationActionPerformed(e));
+                            xTaskPane1ContentPane.add(HyperlinkPanelResult, CC.xy(2, 19));
+                            xTaskPane1ContentPane.add(separator7, CC.xywh(1, 25, 7, 1));
                         }
                         xTaskPaneContainer1.add(xTaskPane1);
 
@@ -786,7 +783,7 @@ public class MainFrame extends JFrame {
 
                                 //---- textArea_Token ----
                                 textArea_Token.setLineWrap(true);
-                                textArea_Token.setForeground(new Color(254, 254, 254));
+                                textArea_Token.setForeground(Color.blue);
                                 textArea_Token.setEditable(false);
                                 textArea_Token.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
                                 textArea_Token.setAutoscrolls(false);
@@ -814,10 +811,10 @@ public class MainFrame extends JFrame {
                     Date_Header.add(label2, CC.xy(3, 3));
 
                     //---- LabelNbrThreads ----
-                    LabelNbrThreads.setText("2");
+                    LabelNbrThreads.setText("Default");
                     LabelNbrThreads.setForeground(Color.orange);
                     LabelNbrThreads.setFont(new Font("Tahoma", Font.BOLD, 12));
-                    Date_Header.add(LabelNbrThreads, CC.xy(5, 3));
+                    Date_Header.add(LabelNbrThreads, CC.xywh(5, 3, 2, 1));
 
                     //---- label4 ----
                     label4.setText("ASYNCH :");
@@ -826,7 +823,7 @@ public class MainFrame extends JFrame {
                     Date_Header.add(label4, CC.xy(7, 3));
 
                     //---- LabelAsynch ----
-                    LabelAsynch.setText("FALSE");
+                    LabelAsynch.setText("TRUE");
                     LabelAsynch.setForeground(Color.orange);
                     LabelAsynch.setFont(new Font("Tahoma", Font.BOLD, 12));
                     Date_Header.add(LabelAsynch, CC.xy(9, 3));
@@ -849,6 +846,7 @@ public class MainFrame extends JFrame {
                 {
                     tabbedPanePrincipal.setOpaque(true);
                     tabbedPanePrincipal.setBackground(new Color(255, 204, 102));
+                    tabbedPanePrincipal.addChangeListener(e -> tabbedPanePrincipalStateChanged(e));
 
                     //======== PanelConfig ========
                     {
@@ -873,7 +871,7 @@ public class MainFrame extends JFrame {
                                 PanelConfig4.setBackground(SystemColor.window);
                                 PanelConfig4.setLayout(new FormLayout(
                                     "2*(default), 10dlu, 2*(80dlu, 5dlu), 80dlu, 40dlu, default, 10dlu, 46dlu:grow, 2*(10dlu), default, 8dlu, default, 2dlu, 170dlu:grow, default, 8dlu, 40dlu, 5dlu",
-                                    "default, 8dlu, 15dlu, 6dlu, 2*(default, $lgap), bottom:default, $lgap, default, $lgap, 20dlu, $lgap, default"));
+                                    "default, 6dlu, 15dlu, 6dlu, 2*(default, $lgap), bottom:default, $lgap, default, $lgap, 20dlu, $lgap, default"));
 
                                 //---- label29 ----
                                 label29.setText("Authentication");
@@ -999,13 +997,13 @@ public class MainFrame extends JFrame {
                                         "[]"));
 
                                     //---- label37 ----
-                                    label37.setText("Sort :   ");
+                                    label37.setText("Keep :   ");
                                     label37.setFont(new Font("DejaVu Sans", Font.BOLD, 14));
                                     panel11.add(label37, "cell 0 0");
 
-                                    //---- textField_Sort_Custom ----
-                                    textField_Sort_Custom.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
-                                    panel11.add(textField_Sort_Custom, "cell 1 0 2 1,growx");
+                                    //---- textField_Keep_Custom ----
+                                    textField_Keep_Custom.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
+                                    panel11.add(textField_Keep_Custom, "cell 1 0 2 1,growx");
                                 }
                                 PanelConfig4.add(panel11, CC.xy(19, 9));
 
@@ -1043,6 +1041,7 @@ public class MainFrame extends JFrame {
                                     "SHA2",
                                     "MD5"
                                 }));
+                                comboBox_AlgoSign.setSelectedIndex(1);
                                 PanelConfig4.add(comboBox_AlgoSign, CC.xywh(10, 11, 3, 1));
 
                                 //======== panel12 ========
@@ -1070,6 +1069,50 @@ public class MainFrame extends JFrame {
                                     panel12.add(comboBox_Accept_Custom, "cell 1 0");
                                 }
                                 PanelConfig4.add(panel12, CC.xy(19, 11));
+
+                                //======== panel13 ========
+                                {
+                                    panel13.setLayout(new MigLayout(
+                                        "hidemode 3",
+                                        // columns
+                                        "[shrink 50,fill]" +
+                                        "[grow,shrink 0,fill]",
+                                        // rows
+                                        "[]"));
+
+                                    //---- label44 ----
+                                    label44.setText("Cipher : ");
+                                    label44.setFont(new Font("DejaVu Sans", Font.BOLD, 14));
+                                    panel13.add(label44, "cell 0 0");
+
+                                    //---- comboBox_Cipher_Custom ----
+                                    comboBox_Cipher_Custom.setModel(new DefaultComboBoxModel<>(new String[] {
+                                        "AES_128_CBC",
+                                        "AES_128_ECB",
+                                        "AES_192_CBC",
+                                        "AES_192_ECB",
+                                        "AES_256_CBC",
+                                        "AES_256_ECB",
+                                        "DES_64_CBC",
+                                        "DES_64_ECB",
+                                        "DESede_192_CBC",
+                                        "DESede_192_ECB"
+                                    }));
+                                    panel13.add(comboBox_Cipher_Custom, "cell 1 0");
+                                }
+                                PanelConfig4.add(panel13, CC.xy(19, 13));
+
+                                //---- button_Decrypt_Custom ----
+                                button_Decrypt_Custom.setText("Decrypt");
+                                button_Decrypt_Custom.setClickedColor(new Color(51, 51, 255));
+                                button_Decrypt_Custom.setFont(new Font("Tahoma", Font.BOLD, 12));
+                                button_Decrypt_Custom.addActionListener(e -> HyperlinkPanelResultatsActionPerformed(e));
+                                PanelConfig4.add(button_Decrypt_Custom, CC.xy(22, 13));
+
+                                //---- label5 ----
+                                label5.setText(" Decryption key Function for secured services = SHA-256 ( HashedPassword ( ... )  )");
+                                label5.setForeground(new Color(91, 91, 91));
+                                PanelConfig4.add(label5, CC.xywh(1, 15, 12, 1));
                             }
                             PanelSSO3.add(PanelConfig4, CC.xywh(2, 2, 16, 1));
 
@@ -1080,35 +1123,30 @@ public class MainFrame extends JFrame {
                                 textArea_Result_Custom.setBackground(new Color(19, 19, 9));
                                 textArea_Result_Custom.setForeground(new Color(248, 248, 248));
                                 textArea_Result_Custom.setText("  Result ...");
-                                textArea_Result_Custom.setEditable(false);
                                 textArea_Result_Custom.setTabSize(5);
                                 textArea_Result_Custom.setLineWrap(true);
                                 textArea_Result_Custom.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
+                                textArea_Result_Custom.setEditable(false);
                                 scrollPane5.setViewportView(textArea_Result_Custom);
                             }
                             PanelSSO3.add(scrollPane5, CC.xywh(2, 6, 14, 16));
 
-                            //---- button_Clear_Custom ----
-                            button_Clear_Custom.setText("Clear ");
-                            button_Clear_Custom.addActionListener(e -> button_ClearActionPerformed(e));
-                            PanelSSO3.add(button_Clear_Custom, CC.xy(17, 6));
-
                             //---- button_Script_CUSTOM ----
                             button_Script_CUSTOM.setText("Script");
                             button_Script_CUSTOM.addActionListener(e -> button_Script_CUSTOM_ActionPerformed(e));
-                            PanelSSO3.add(button_Script_CUSTOM, CC.xy(17, 8));
+                            PanelSSO3.add(button_Script_CUSTOM, CC.xy(17, 6));
 
-                            //---- button_Decrypt_Custom ----
-                            button_Decrypt_Custom.setText("Dec");
-                            button_Decrypt_Custom.addActionListener(e -> button_Decrypt_Custom_ActionPerformed(e));
-                            PanelSSO3.add(button_Decrypt_Custom, CC.xy(17, 12));
+                            //---- button_Clear_Custom ----
+                            button_Clear_Custom.setText("Clear ");
+                            button_Clear_Custom.addActionListener(e -> button_ClearActionPerformed(e));
+                            PanelSSO3.add(button_Clear_Custom, CC.xy(17, 8));
 
-                            //---- comboBox_Decrypt_Custom ----
-                            comboBox_Decrypt_Custom.setModel(new DefaultComboBoxModel<>(new String[] {
-                                "AES",
-                                "DES"
-                            }));
-                            PanelSSO3.add(comboBox_Decrypt_Custom, CC.xy(17, 14));
+                            //---- button_Copy_ClipBoard_Custom ----
+                            button_Copy_ClipBoard_Custom.setText("Copy_Text");
+                            button_Copy_ClipBoard_Custom.setClickedColor(new Color(51, 51, 255));
+                            button_Copy_ClipBoard_Custom.setFont(new Font("Tahoma", Font.BOLD, 12));
+                            button_Copy_ClipBoard_Custom.addActionListener(e -> HyperlinkPanelResultatsActionPerformed(e));
+                            PanelSSO3.add(button_Copy_ClipBoard_Custom, CC.xy(17, 12));
 
                             //---- button_Zoom_plus_customSign ----
                             button_Zoom_plus_customSign.setText("+");
@@ -1130,7 +1168,7 @@ public class MainFrame extends JFrame {
                     {
                         PanelSSO.setLayout(new FormLayout(
                             "7dlu, 2*($lcgap, default), $lcgap, default:grow, 3*($lcgap, default), $lcgap, right:default:grow, 6dlu, default, $lcgap, 10dlu",
-                            "5dlu, 2*($lgap, default), 6dlu, default, $lgap, 15dlu, $lgap, default, $lgap, default:grow, $lgap, 10dlu, 6dlu, 10dlu, 15dlu, default"));
+                            "5dlu, 2*($lgap, default), 6dlu, default, $lgap, 15dlu, $lgap, default, $lgap, 25dlu, $lgap, default, $lgap, default:grow, $lgap, 10dlu, 6dlu, 10dlu, 15dlu, default"));
 
                         //======== PanelConfig2 ========
                         {
@@ -1139,8 +1177,8 @@ public class MainFrame extends JFrame {
                                 new EmptyBorder(5, 5, 5, 5)));
                             PanelConfig2.setBackground(SystemColor.window);
                             PanelConfig2.setLayout(new FormLayout(
-                                "2*(default), 10dlu, 2*(default), 5dlu, 70dlu, 15dlu, default, 5dlu, 110dlu:grow, 2*(10dlu), default, 8dlu, default, 2dlu, 170dlu:grow, default, 8dlu, 40dlu, 5dlu",
-                                "default, 8dlu, 15dlu, 6dlu, 4*(default, $lgap), 20dlu, $lgap, default"));
+                                "2*(default), 10dlu, 2*(default), 5dlu, 70dlu, 15dlu, default, 5dlu, 110dlu:grow, 2*(10dlu), default, 7dlu, default, 2dlu, 170dlu:grow, default, 8dlu, 40dlu, 2dlu, $lcgap, default",
+                                "default, 6dlu, 15dlu, 6dlu, 4*(default, $lgap), 20dlu, $lgap, 10dlu"));
 
                             //---- label10 ----
                             label10.setText("Authorization ");
@@ -1165,7 +1203,7 @@ public class MainFrame extends JFrame {
 
                             //---- textField_URL_KEYCLOAK ----
                             textField_URL_KEYCLOAK.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
-                            textField_URL_KEYCLOAK.setText("http://127.0.0.1:8180/auth/realms/serenity/protocol/openid-connect/token");
+                            textField_URL_KEYCLOAK.setText("http://localhost:8180/auth/realms/serenity/protocol/openid-connect/token");
                             PanelConfig2.add(textField_URL_KEYCLOAK, CC.xywh(5, 5, 7, 1));
 
                             //---- label12 ----
@@ -1178,10 +1216,10 @@ public class MainFrame extends JFrame {
                             textField_RUL_SERVICE.setText("http://localhost:8080/rest/resources/infoServices");
                             PanelConfig2.add(textField_RUL_SERVICE, CC.xywh(18, 5, 2, 1));
 
-                            //---- button_Run ----
-                            button_Run.setText("Invoke");
-                            button_Run.addActionListener(e -> button_RunActionPerformed(e));
-                            PanelConfig2.add(button_Run, CC.xy(21, 5));
+                            //---- button_Run_SSO ----
+                            button_Run_SSO.setText("Invoke");
+                            button_Run_SSO.addActionListener(e -> button_RunActionPerformed(e));
+                            PanelConfig2.add(button_Run_SSO, CC.xy(21, 5));
 
                             //======== panel2 ========
                             {
@@ -1238,13 +1276,13 @@ public class MainFrame extends JFrame {
                                     "[]"));
 
                                 //---- label17 ----
-                                label17.setText("Sort :   ");
+                                label17.setText("Keep :   ");
                                 label17.setFont(new Font("DejaVu Sans", Font.BOLD, 14));
                                 panel5.add(label17, "cell 0 0");
 
-                                //---- textField_Sort ----
-                                textField_Sort.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
-                                panel5.add(textField_Sort, "cell 1 0 2 1,growx");
+                                //---- textField_Keep_SSO ----
+                                textField_Keep_SSO.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
+                                panel5.add(textField_Keep_SSO, "cell 1 0 2 1,growx");
                             }
                             PanelConfig2.add(panel5, CC.xy(18, 9));
 
@@ -1263,7 +1301,7 @@ public class MainFrame extends JFrame {
                             PanelConfig2.add(label9, CC.xy(9, 11));
 
                             //---- passwordField_secret_id ----
-                            passwordField_secret_id.setText("eb9b5dcc-d63e-434f-a429-29b1653ecb8e");
+                            passwordField_secret_id.setText("6b64f7fa-a6ec-4f53-b941-2bdc74ef2640");
                             PanelConfig2.add(passwordField_secret_id, CC.xy(11, 11));
 
                             //======== panel1 ========
@@ -1314,37 +1352,44 @@ public class MainFrame extends JFrame {
                         //======== scrollPane1 ========
                         {
 
-                            //---- textArea_Result ----
-                            textArea_Result.setBackground(new Color(19, 19, 9));
-                            textArea_Result.setForeground(new Color(248, 248, 248));
-                            textArea_Result.setText("  Result ...");
-                            textArea_Result.setEditable(false);
-                            textArea_Result.setTabSize(5);
-                            textArea_Result.setLineWrap(true);
-                            textArea_Result.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
-                            scrollPane1.setViewportView(textArea_Result);
+                            //---- textArea_Result_SSO ----
+                            textArea_Result_SSO.setBackground(new Color(19, 19, 9));
+                            textArea_Result_SSO.setForeground(new Color(248, 248, 248));
+                            textArea_Result_SSO.setText("  Result ...");
+                            textArea_Result_SSO.setEditable(false);
+                            textArea_Result_SSO.setTabSize(5);
+                            textArea_Result_SSO.setLineWrap(true);
+                            textArea_Result_SSO.setFont(new Font("DejaVu Sans", Font.PLAIN, 14));
+                            scrollPane1.setViewportView(textArea_Result_SSO);
                         }
-                        PanelSSO.add(scrollPane1, CC.xywh(3, 7, 13, 11));
-
-                        //---- button_Clear ----
-                        button_Clear.setText("Clear ");
-                        button_Clear.addActionListener(e -> button_ClearActionPerformed(e));
-                        PanelSSO.add(button_Clear, CC.xy(17, 7));
+                        PanelSSO.add(scrollPane1, CC.xywh(3, 7, 13, 15));
 
                         //---- button_Script_SSO ----
                         button_Script_SSO.setText("Script");
                         button_Script_SSO.addActionListener(e -> button_Script_SSOActionPerformed(e));
-                        PanelSSO.add(button_Script_SSO, CC.xy(17, 11));
+                        PanelSSO.add(button_Script_SSO, CC.xy(17, 7));
+
+                        //---- button_Clear ----
+                        button_Clear.setText("Clear ");
+                        button_Clear.addActionListener(e -> button_ClearActionPerformed(e));
+                        PanelSSO.add(button_Clear, CC.xy(17, 11));
+
+                        //---- button_Copy_ClipBoard_SSO ----
+                        button_Copy_ClipBoard_SSO.setText("Copy_Text");
+                        button_Copy_ClipBoard_SSO.setClickedColor(new Color(51, 51, 255));
+                        button_Copy_ClipBoard_SSO.setFont(new Font("Tahoma", Font.BOLD, 12));
+                        button_Copy_ClipBoard_SSO.addActionListener(e -> HyperlinkPanelResultatsActionPerformed(e));
+                        PanelSSO.add(button_Copy_ClipBoard_SSO, CC.xy(17, 15, CC.LEFT, CC.DEFAULT));
 
                         //---- button_Zoom_plus_sso ----
                         button_Zoom_plus_sso.setText("+");
                         button_Zoom_plus_sso.setFont(new Font("DejaVu Sans", Font.BOLD, 16));
-                        PanelSSO.add(button_Zoom_plus_sso, CC.xy(17, 15));
+                        PanelSSO.add(button_Zoom_plus_sso, CC.xy(17, 19));
 
                         //---- button_Zoom_minus_sso ----
                         button_Zoom_minus_sso.setText("-");
                         button_Zoom_minus_sso.setFont(new Font("DejaVu Sans", Font.BOLD, 16));
-                        PanelSSO.add(button_Zoom_minus_sso, CC.xy(17, 17));
+                        PanelSSO.add(button_Zoom_minus_sso, CC.xy(17, 21));
                     }
                     tabbedPanePrincipal.addTab("** KeyCloack-Jax-Client ( SSO ) **", PanelSSO);
 
@@ -1389,7 +1434,7 @@ public class MainFrame extends JFrame {
         private JComponent separator4;
         private JXHyperlink HyperlinkPanelConfiguration;
         private JXHyperlink HyperlinkPanelSimulation;
-        private JXHyperlink HyperlinkPanelResults;
+        private JXHyperlink HyperlinkPanelResult;
         private JComponent separator7;
         protected JXTaskPane xTaskPane4;
         private JComponent separator9;
@@ -1436,7 +1481,7 @@ public class MainFrame extends JFrame {
         private JLabel label39;
         private JPanel panel11;
         private JLabel label37;
-        private JTextField textField_Sort_Custom;
+        private JTextField textField_Keep_Custom;
         private JComboBox<String> comboBox_HashedLogin;
         private JComboBox<String> comboBox_HashedPassword;
         private JComboBox<String> comboBox_HashedTimeStamp;
@@ -1444,12 +1489,16 @@ public class MainFrame extends JFrame {
         private JPanel panel12;
         private JLabel label40;
         private JComboBox<String> comboBox_Accept_Custom;
+        private JPanel panel13;
+        private JLabel label44;
+        private JComboBox<String> comboBox_Cipher_Custom;
+        private JXHyperlink button_Decrypt_Custom;
+        private JLabel label5;
         private JScrollPane scrollPane5;
         private JTextArea textArea_Result_Custom;
-        private JButton button_Clear_Custom;
         private JButton button_Script_CUSTOM;
-        private JButton button_Decrypt_Custom;
-        private JComboBox<String> comboBox_Decrypt_Custom;
+        private JButton button_Clear_Custom;
+        private JXHyperlink button_Copy_ClipBoard_Custom;
         private JButton button_Zoom_plus_customSign;
         private JButton button_Zoom_minus_customSign;
         protected JPanel PanelSSO;
@@ -1461,7 +1510,7 @@ public class MainFrame extends JFrame {
         private JTextField textField_URL_KEYCLOAK;
         private JLabel label12;
         private JTextField textField_RUL_SERVICE;
-        private JButton button_Run;
+        private JButton button_Run_SSO;
         private JPanel panel2;
         private JLabel label16;
         private JTextField textField_Params;
@@ -1471,7 +1520,7 @@ public class MainFrame extends JFrame {
         private JTextField textField_Client_id;
         private JPanel panel5;
         private JLabel label17;
-        private JTextField textField_Sort;
+        private JTextField textField_Keep_SSO;
         private JLabel label14;
         private JPasswordField passwordField_Password;
         private JLabel label9;
@@ -1482,9 +1531,10 @@ public class MainFrame extends JFrame {
         private JPanel panel4;
         private JCheckBox checkBox_Refresh_Token;
         private JScrollPane scrollPane1;
-        private JTextArea textArea_Result;
-        private JButton button_Clear;
+        private JTextArea textArea_Result_SSO;
         private JButton button_Script_SSO;
+        private JButton button_Clear;
+        private JXHyperlink button_Copy_ClipBoard_SSO;
         private JButton button_Zoom_plus_sso;
         private JButton button_Zoom_minus_sso;
         protected JPanel PanelResult;

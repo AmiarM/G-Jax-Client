@@ -1,21 +1,27 @@
 
 package com.rac021.jax.client.mvc ;
 
-import java.util.List ;
+import java.io.File ;
+import java.util.UUID ;
 import javax.json.Json ;
-import java.util.ArrayList ;
-import javax.json.JsonReader ;
+import java.awt.Toolkit ;
+import java.io.StringReader ;
 import javax.json.JsonString ;
+import javax.ws.rs.core.Form ;
+import javax.json.JsonReader ;
+import java.security.KeyStore ;
+import java.io.FileOutputStream ;
+import javax.ws.rs.core.Response ;
+import javax.ws.rs.client.Entity ;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.client.Client ;
-import org.apache.http.HttpResponse ;
 import javax.ws.rs.client.Invocation ;
+import java.awt.datatransfer.Clipboard ;
 import javax.ws.rs.client.ClientBuilder ;
-import org.apache.http.client.HttpClient ;
-import org.apache.http.client.methods.HttpPost ;
-import com.rac021.jax.client.security.Encryptor ;
-import org.apache.http.message.BasicNameValuePair ;
-import org.apache.http.impl.client.DefaultHttpClient ;
-import org.apache.http.client.entity.UrlEncodedFormEntity ;
+import com.rac021.client.security.ICryptor ;
+import java.awt.datatransfer.StringSelection ;
+import com.rac021.client.security.EncDecRyptor ;
+import com.rac021.client.security.FactoryCipher ;
 
 /**
  *
@@ -23,81 +29,159 @@ import org.apache.http.client.entity.UrlEncodedFormEntity ;
  */
 
 public class Model {
+    
+    static KeyStore keystore ; 
+    
+    static {
+        
+           /* Initialise KeyStore for SSL Connections */
+        
+           try {
+               
+                String key      = UUID.randomUUID().toString()    ;
+                String filename = "cacerts"                       ;
+                
+                /*
+                String filename = System.getProperty("java.home")   +
+                                  "/lib/security/cacerts"
+                                  .replace('/', File.separatorChar) ;
+                */
+                File f = new File(filename) ;
+                if( ! f.exists() ) f.createNewFile() ;
+                
+                keystore = KeyStore.getInstance(KeyStore.getDefaultType()) ;
 
-    public Model() {
+                char[] password = key.toCharArray() ;
+                keystore.load(null, password )      ;
+
+                // Store away the keystore.
+               try ( FileOutputStream fos = new FileOutputStream(filename) ) {
+                   keystore.store(fos, password )           ;
+               }
+
+                keystore  = KeyStore.getInstance( KeyStore
+                                    .getDefaultType() )     ;
+                
+           } catch( Exception ex )      {
+               System.out.println( ex ) ;
+           }
     }
     
-    
+    public Model() {
+    }
+        
     public static String getToken(  String url           , 
                                     String username      ,
                                     String password      , 
                                     String client_id     , 
                                     String client_secret ) throws Exception {
- 
-     HttpClient client = new DefaultHttpClient()                               ;
-     HttpPost post = new HttpPost( url )                                       ;
-     post.setHeader("Content-Type", "application/x-www-form-urlencoded")       ;
-     List urlParameters = new ArrayList<>()                                    ;
-     urlParameters.add(new BasicNameValuePair("username", username))           ;
-     urlParameters.add(new BasicNameValuePair("password", password))           ;
-     urlParameters.add(new BasicNameValuePair("client_id", client_id))         ;
-     urlParameters.add(new BasicNameValuePair("grant_type", "password"))       ;
-     urlParameters.add(new BasicNameValuePair("client_secret", client_secret)) ;
-     post.setEntity(new UrlEncodedFormEntity(urlParameters))                   ;
 
-     HttpResponse response = client.execute(post)                                 ;
-     JsonReader   reader   = Json.createReader(response.getEntity().getContent()) ;
-     
-     JsonString jsonString = reader.readObject().getJsonString("access_token")    ;
-     
-     if( jsonString != null ) {
-         String accessToken = jsonString.getString()      ;
-         if(accessToken == null ) {
-             System.out.println(" BAD AUTHENTICATION ! ") ;
-             return null ;
-         }
-         return accessToken ;
-     }
-     return null ;
+        Client clientB  ;
+        
+        if( url != null && url.startsWith("https"))    {
+            
+            clientB = ClientBuilder.newBuilder()
+                                   .trustStore(keystore)
+                                   .build()            ;
+        } else {
+            
+            clientB = ClientBuilder.newClient()        ;
+        }
+         
+        Invocation.Builder client = clientB.target( url )
+                                           .request(MediaType.APPLICATION_JSON) ;
+        
+        Form form = new Form()                     ;
+        form.param("username", username)           ;
+        form.param("password", password)           ;
+        form.param("client_id", client_id)         ;
+        form.param("grant_type", "password")       ;
+        form.param("client_secret", client_secret) ;
+   
+        Response response= client.post(Entity.form(form), Response.class) ;
 
+        if (response.getStatus() == 200) {
+            
+               StringReader stringReader  = new StringReader(response.readEntity(String.class))  ;
+               
+               try (JsonReader jsonReader = Json.createReader(stringReader)) {
+                   
+                   JsonString jsonString = jsonReader.readObject().getJsonString("access_token") ;
+                    
+                    if( jsonString == null ) {
+                        System.out.println(" BAD AUTHENTICATION ! ") ;
+                        return null                                  ;
+                    }
+                    else {
+                        return jsonString.getString() ;
+                    }
+               }
+        }
+        else {
+          return   "_NULL_:" +response.readEntity(String.class) ;
+        }
     }    
          
     public static String invokeService_Using_SSO ( String url    ,
                                                    String token  ,
                                                    String accept , 
                                                    Class  clazz  ,
-                                                   String sort   ) throws Exception {
- 
-        Client clientB = ClientBuilder.newClient()  ;
+                                                   String keep   ) throws Exception {
+        Client clientB  ;
+        
+        if( url != null && url.startsWith("https"))    {
+            
+            clientB = ClientBuilder.newBuilder()
+                                   .trustStore(keystore)
+                                   .build()            ;
+        } else {
+            
+            clientB = ClientBuilder.newClient()        ;
+        }
          
         Invocation.Builder client = clientB.target( url )
                                            .request()
                                            .header("accept", accept)
                                            .header("Authorization", " Bearer " + token ) ;
         
-        if( sort != null && ! sort.isEmpty() ) {
-            client.header("sort", sort ) ;
+        if( keep != null && ! keep.isEmpty() ) {
+            client.header("keep", keep ) ;
         }
         
         return client.get(String.class)  ;
 
     }
     
-    public static String invokeService_Using_Custom ( String url   ,
-                                                     String accept , 
-                                                     String token  ,
-                                                     Class  clazz  ,
-                                                     String sort   ) throws Exception {
- 
-        Client clientB = ClientBuilder.newClient()  ;
+    public static String invokeService_Using_Custom ( String url    ,
+                                                      String accept , 
+                                                      String token  ,
+                                                      Class  clazz  ,
+                                                      String keep   ,
+                                                      String cipher ) throws Exception {
+
+        Client clientB  ;
+        
+        if( url != null && url.startsWith("https"))    {
+            
+            clientB = ClientBuilder.newBuilder()
+                                   .trustStore(keystore)
+                                   .build()            ;
+        } else {
+            
+            clientB = ClientBuilder.newClient()        ;
+        }
          
         Invocation.Builder client = clientB.target( url )
                                            .request()
                                            .header("accept", accept)
-                                           .header("API-key-Token", token.trim() ) ;
+                                           .header( "API-key-Token", token.trim() ) ;
         
-        if( sort != null && ! sort.isEmpty() ) {
-             client.header("sort", sort ) ;
+        if( keep != null && ! keep.isEmpty() ) {
+             client.header("keep", keep ) ;
+        }
+        
+        if( cipher != null && ! cipher.isEmpty() ) {
+             client.header("cipher", cipher ) ;
         }
         
         return client.get(String.class) ;
@@ -106,22 +190,28 @@ public class Model {
     private static String getBlanc( int nbr ) {
         String blanc = " " ;
         for(int i = 0 ; i < nbr ; i++ ) {
-            blanc += " " ;
+            blanc += " "   ;
         }
-        return blanc     ;
+        return blanc       ;
     }
     
-    public static String generateScriptSSO( String keyCLoakUrl , 
+    public static String generateScriptSSO( String keyCloakUrl , 
                                             String userName    , 
                                             String password    , 
                                             String client_id   , 
                                             String secret_id   , 
-                                            String sort        , 
+                                            String keep        , 
                                             String url         , 
                                             String params      , 
                                             String accept )    {
         
-        String KEYCLOAK_RESPONSE = " KEYCLOAK_RESPONSE=`curl -s -X POST " + keyCLoakUrl  + " \\\n " 
+        
+        String trustCertkeyCloakUrl = keyCloakUrl.trim().startsWith("https") ? " -k " : " " ;
+        String trustCertUrl         = url.trim().startsWith("https") ? " -k " : " " ;
+         
+        String KEYCLOAK_RESPONSE = " KEYCLOAK_RESPONSE=`curl "
+                                   + trustCertkeyCloakUrl
+                                   + "-s -X POST " + keyCloakUrl  + " \\\n " 
                                    + getBlanc(50) + " -H \"Content-Type: application/x-www-form-urlencoded\" \\\n " 
                                    + getBlanc(50) + " -d 'username=" + userName + "' \\\n "
                                    + getBlanc(50) + " -d 'password=" + password + "' \\\n "
@@ -129,13 +219,17 @@ public class Model {
                                    + getBlanc(50) + " -d 'client_id=" + client_id + "' \\\n "
                                    + getBlanc(50) + " -d 'client_secret=" + secret_id + "' ` \n " ;
                  
-        String _token = " ACCESS_TOKEN=`echo $KEYCLOAK_RESPONSE | sed 's/.*access_token\":\"//g' | sed 's/\".*//g'` " ;
+        String _token = " ACCESS_TOKEN=`echo $KEYCLOAK_RESPONSE | " + 
+                        "sed 's/.*access_token\":\"//g' | sed 's/\".*//g'` " ;
                
-        String invokeService =   " curl -H \"accept: " + accept + "\"  "
-                                + " -H \"Authorization: Bearer $ACCESS_TOKEN\" " ;
+        String invokeService =   " curl "        +
+                                 trustCertUrl    +
+                                 "-H \"accept: " + 
+                                 accept + "\"  " + 
+                                 " -H \"Authorization: Bearer $ACCESS_TOKEN\" " ;
                
-        if( sort != null && ! sort.isEmpty() ) {
-             invokeService += " -H \"sort: " + sort + " \" " ;
+        if( keep != null && ! keep.isEmpty() ) {
+             invokeService += " -H \"keep: " + keep + " \" " ;
         }
 
         String _url = url ;
@@ -155,33 +249,45 @@ public class Model {
                 invokeService                           ;
     }
     
-    public static String decrypt(String algo, String pass ,String text) throws Exception {
+    public static String decrypt( String cipher , String pass ,String text ) throws Exception {
 
-        if(algo.equalsIgnoreCase("AES"))                 {
-           return Encryptor.aes128CBC7Decrypt(pass, text ) ;
-        }
-        throw new IllegalStateException(" Algo [ " + algo + " ] Not Implemented Yet !! " ) ;
+        ICryptor crypt = FactoryCipher.getCipher( cipher , pass ) ;
+
+        crypt.setOperationMode(EncDecRyptor._Operation.Decrypt )  ;
+
+        return new String ( crypt.process( text, EncDecRyptor._CipherOperation.dofinal ) ) ;
+        
     }
     
-    public static String generateScriptCUSTOM( String url           , 
-                                               String login         , 
-                                               String password      , 
-                                               String params        , 
-                                               String sort          ,
-                                               String accept        ,
-                                               String hashLogin     , 
-                                               String hashPassword  , 
-                                               String hashTimeStamp ,
-                                               String algoSign      ) {
+    public static String generateScriptCUSTOM ( String url           , 
+                                                String login         , 
+                                                String password      , 
+                                                String params        , 
+                                                String keep          ,
+                                                String accept        ,
+                                                String hashLogin     , 
+                                                String hashPassword  , 
+                                                String hashTimeStamp ,
+                                                String algoSign      ,
+                                                String cipher      ) {
             
         String _url = url ;
         if( params != null && ! params.isEmpty() )
            _url += "?" + params ;
         
-        String invokeService = " curl -H \"accept: " + accept + "\"  " ;
+        String trustCert = url.trim().startsWith("https") ? " -k " : " " ;
+        
+        String invokeService =  " curl "        +
+                                trustCert       +
+                                "-H \"accept: " +
+                                accept + "\"  " ;
                
-        if( sort != null && ! sort.isEmpty() ) {
-          invokeService += " -H \"sort: " + sort + " \" " ;
+        if( keep != null && ! keep.isEmpty() ) {
+          invokeService += " -H \"keep: " + keep + " \" " ;
+        }
+        
+        if( cipher != null && ! cipher.isEmpty() ) {
+          invokeService += " -H \"cipher: " + cipher + " \" " ;
         }
         
         return    " # !/bin/bash \n\n" 
@@ -202,12 +308,38 @@ public class Model {
     private static String getHashedScript( String variable, String algo ) {
       
         if(algo.equalsIgnoreCase("SHA1")) {
-          return " Hashed_" + variable.trim() + "=` echo -n $" + variable.trim() + " | sha1sum  | cut -d ' ' -f 1 ` \n" 
-               + "  Hashed_" + variable.trim() + "=` echo $Hashed_" + variable.trim() + " | sed 's/^0*//'`";
+          return " Hashed_"                            + 
+                 variable.trim()                       + 
+                 "=` echo -n $"                        + 
+                 variable.trim()                       + 
+                 " | sha1sum  | cut -d ' ' -f 1 ` \n"  + 
+                 "  Hashed_"                           + 
+                 variable.trim()                       + 
+                 "=` echo $Hashed_"                    + 
+                 variable.trim()                       + 
+                 " | sed 's/^0*//'`"                   ;
+        }
+        if(algo.equalsIgnoreCase("SHA2")) {
+          return " Hashed_"                             + 
+                 variable.trim()                        + 
+                 "=` echo -n $"                         + 
+                 variable.trim()                        + 
+                 " | sha256sum  | cut -d ' ' -f 1 ` \n" + 
+                 "  Hashed_"                            + 
+                 variable.trim()                        + 
+                 "=` echo $Hashed_"                     + 
+                 variable.trim()                        + 
+                 " | sed 's/^0*//'`"                    ;
         }
         else if(algo.equalsIgnoreCase("MD5")) {
-           return " Hashed_" + variable.trim() + "=` echo -n $" + variable.trim() + " | md5sum  | cut -d ' ' -f 1` \n" 
-                + "  Hashed_" + variable.trim() + "=` echo $Hashed_" + variable.trim() + " | sed 's/^0*//'`" ;
+           return " Hashed_"                           + 
+                  variable.trim()                      + 
+                  "=` echo -n $"                       + 
+                  variable.trim()                      + 
+                  " | md5sum  | cut -d ' ' -f 1` \n"   + 
+                  "  Hashed_" + variable.trim()        +
+                  "=` echo $Hashed_" + variable.trim() +
+                  " | sed 's/^0*//'`" ;
         }
         
         return " Hashed_" + variable.trim() + "=\"$" + variable.trim() + "\""  ;
@@ -217,14 +349,27 @@ public class Model {
     private static String getSigneScript( String algo ) {
       
         if(algo.equalsIgnoreCase("SHA1"))  {
-          return " SIGNE=`echo -n $Hashed_Login$Hashed_Password$Hashed_TimeStamp | sha1sum  | cut -d ' ' -f 1 ` \n " 
-               + " SIGNE=` echo $SIGNE | sed 's/^0*//' ` " ; 
+          return " SIGNE=`echo -n $Hashed_Login$Hashed_Password$Hashed_TimeStamp" + 
+                  " | sha1sum  | cut -d ' ' -f 1 ` \n "                           + 
+                  " SIGNE=` echo $SIGNE | sed 's/^0*//' ` "                       ; 
+        }
+        if(algo.equalsIgnoreCase("SHA2"))  {
+          return " SIGNE=`echo -n $Hashed_Login$Hashed_Password$Hashed_TimeStamp" + 
+                  " | sha256sum  | cut -d ' ' -f 1 ` \n "                         + 
+                  " SIGNE=` echo $SIGNE | sed 's/^0*//' ` "                       ; 
         }
         else if(algo.equalsIgnoreCase("MD5")) {
-          return " SIGNE=`echo -n $Hashed_Login$Hashed_Password$Hashed_TimeStamp | md5sum  | cut -d ' ' -f 1 ` \n "
-               + " SIGNE=` echo $SIGNE | sed 's/^0*//' ` " ;
+          return " SIGNE=`echo -n $Hashed_Login$Hashed_Password$Hashed_TimeStamp " + 
+                 "| md5sum  | cut -d ' ' -f 1 ` \n "                               +
+                 " SIGNE=` echo $SIGNE | sed 's/^0*//' ` "                         ;
         }
         return " SIGNE=`echo -n $Hashed_Login$Hashed_Password$Hashed_TimeStamp ` " ;
+    }
+    
+    public static void copyToClipBoard( String text )                         {
+        StringSelection stringSelection = new StringSelection (text)          ;
+        Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard () ;
+        clpbrd.setContents (stringSelection, null)                            ;
     }
 
 }
