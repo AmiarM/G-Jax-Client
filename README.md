@@ -22,12 +22,11 @@
 
 #### Custom Sign On Panel
 
-![custom-g-jax-client](https://cloud.githubusercontent.com/assets/7684497/25271430/6cd0c172-2684-11e7-84ee-74ecf5f4b3e5.png)
+![custom-g-jax-client](https://user-images.githubusercontent.com/7684497/27563357-6570deea-5ad1-11e7-9396-c287592cd050.png
 
 -------------------------------------
 
 #### KeyCloack Panel
 
-![sso-g-jax-client](https://cloud.githubusercontent.com/assets/7684497/25271469/8df04b34-2684-11e7-9c0d-b17a91baf2ab.png)
-
+![sso-g-jax-client](https://user-images.githubusercontent.com/7684497/27563366-7b8747c8-5ad1-11e7-8bc3-3fe6d48b1a85.png)
 
