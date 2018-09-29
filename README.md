@@ -28,5 +28,5 @@
 
 #### KeyCloack Panel
 
-![sso-g-jax-client](https://user-images.githubusercontent.com/7684497/27563489-458badd4-5ad2-11e7-8192-9cc309dbc374.png)
+![sso-g-jax-client](https://user-images.githubusercontent.com/7684497/27563489-458badd4-5ad2-11e7-8192-9cc309dbc374.png)  
 
